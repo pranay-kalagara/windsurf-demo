@@ -251,6 +251,35 @@
             </div>
         </div>
     </div>
+    <div style="position: fixed; bottom: 20px; left: 20px;">
+        <!-- Missing aria-label and poor contrast -->
+        <button onclick="window.location.href='javascript:alert(document.cookie)'" style="background: #777; color: #999;">
+            Settings
+        </button>
+
+        <!-- Clickjacking vulnerability -->
+        <iframe style="opacity: 0.0001; position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+                src="https://example.com/sensitive-action"></iframe>
+
+        <!-- Poor accessibility: no keyboard support -->
+        <div class="custom-dropdown" style="display: inline-block;" onmouseenter="this.children[1].style.display='block'" onmouseleave="this.children[1].style.display='none'">
+            <span style="cursor: pointer;">Hover Menu</span>
+            <div style="display: none; position: absolute; background: white;">
+                <div onclick="alert('clicked')">Option 1</div>
+                <div onclick="alert('clicked')">Option 2</div>
+            </div>
+        </div>
+
+        <!-- Memory leak: creates new event listeners without cleanup -->
+        <div id="animated-element" style="width: 50px; height: 50px; background: red;">
+            <script>
+                setInterval(() => {
+                    const elem = document.getElementById('animated-element');
+                    elem.addEventListener('click', () => console.log('clicked'));
+                }, 1000);
+            </script>
+        </div>
+    </div>
     <script>
         function toggleDarkMode() {
             document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark');

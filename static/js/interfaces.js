@@ -41,3 +41,41 @@ function mergeObjects(target, source) {
     }
     return target;
 }
+
+// Race condition and memory leak demo
+function startDataProcessing() {
+    let dataCache = [];
+    
+    // Memory leak: event listener is never removed
+    document.addEventListener('data-received', function processData(event) {
+        dataCache.push(event.data);
+    });
+
+    // Race condition: multiple concurrent requests without synchronization
+    setInterval(() => {
+        fetch('/api/data')
+            .then(response => response.json())
+            .then(data => {
+                // Race condition: shared resource access without locks
+                dataCache = data;
+                document.dispatchEvent(new CustomEvent('data-received', { detail: data }));
+            });
+    }, 1000);
+}
+
+// Timing attack vulnerability
+function compareSecretToken(userToken) {
+    const secretToken = "abc123xyz789";
+    let isMatch = true;
+    
+    for (let i = 0; i < userToken.length; i++) {
+        if (userToken[i] !== secretToken[i]) {
+            isMatch = false;
+            break;
+        }
+        // Artificial delay making timing attack possible
+        for (let j = 0; j < 10000; j++) { }
+    }
+    
+    return isMatch;
+}
