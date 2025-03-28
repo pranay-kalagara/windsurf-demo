@@ -4,6 +4,9 @@ A demo application and tasks to demonstrate the power of the [Windsurf Editor](h
 
 This entire application was written from scratch by Cascade in the Windsurf Editor, and you will be able to add some more!
 
+## Test GitHub Pull Request Extension
+This line was added to test the GitHub Pull Request extension functionality in Windsurf.
+
 ## Prerequisites
 
 - Python 3.7 or higher
