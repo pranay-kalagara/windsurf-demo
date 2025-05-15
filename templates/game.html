@@ -6,6 +6,7 @@
         :root {
             --bg-color: #f0f0f0;
             --canvas-color: white;
+            --boost-color: #ff5722;
         }
 
         :root[data-theme="dark"] {
@@ -31,6 +32,29 @@
             font-size: 20px;
             color: #333;
             text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        
+        #boost-indicator {
+            position: absolute;
+            top: 40px;
+            left: 10px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            color: #333;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+            display: none;
+        }
+        
+        #boost-indicator.active {
+            display: block;
+            color: var(--boost-color);
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
         }
         :root[data-theme="dark"] #score {
             color: #fff;
@@ -207,6 +231,7 @@
 <body>
     <canvas id="gameCanvas"></canvas>
     <div id="score">Score: 0</div>
+    <div id="boost-indicator">BOOST ACTIVE!</div>
     <div id="leaderboard">
         <h3>Leaderboard</h3>
         <div id="leaderboard-content"></div>
@@ -231,6 +256,10 @@
             <div class="control-item">
                 <span>Split cells</span>
                 <span class="control-action">Left click</span>
+            </div>
+            <div class="control-item">
+                <span>Boost (costs mass)</span>
+                <span class="control-action">Hold Spacebar</span>
             </div>
         </div>
         <div class="control-group">

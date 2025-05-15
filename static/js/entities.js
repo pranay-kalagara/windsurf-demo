@@ -11,7 +11,10 @@ import {
     MERGE_COOLDOWN,
     MERGE_DISTANCE,
     MERGE_FORCE,
-    MERGE_START_FORCE
+    MERGE_START_FORCE,
+    BOOST_SPEED_MULTIPLIER,
+    BOOST_MASS_LOSS_RATE,
+    BOOST_MIN_SCORE
 } from './config.js';
 
 const AI_NAMES = [
@@ -178,7 +181,12 @@ export function updatePlayer() {
         // Update each cell
         gameState.playerCells.forEach(cell => {
             // Base speed is inversely proportional to cell size
-            const speed = 5 / (getSize(cell.score) / 20);
+            let speed = 5 / (getSize(cell.score) / 20);
+            
+            // Apply boost multiplier if active and cell has enough mass
+            if (gameState.boost.active && cell.score > BOOST_MIN_SCORE) {
+                speed *= BOOST_SPEED_MULTIPLIER;
+            }
 
             // Update velocity (with inertia)
             cell.velocityX = cell.velocityX * 0.9 + direction.x * speed * 0.1;

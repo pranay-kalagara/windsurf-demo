@@ -1,4 +1,4 @@
-import { gameState, mouse } from './gameState.js';
+import { gameState, mouse, keyboard } from './gameState.js';
 import { initRenderer, resizeCanvas, drawGame, drawMinimap, updateLeaderboard } from './renderer.js';
 import { updatePlayer, updateAI, initEntities, handlePlayerSplit } from './entities.js';
 import { handleFoodCollisions, handlePlayerAICollisions, handleAIAICollisions, respawnEntities } from './collisions.js';
@@ -21,6 +21,21 @@ function setupInputHandlers() {
     // Window resize
     window.addEventListener('resize', () => {
         resizeCanvas();
+    });
+    
+    // Keyboard events for boost
+    window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') {
+            keyboard.space = true;
+            handleBoostStart();
+        }
+    });
+    
+    window.addEventListener('keyup', (e) => {
+        if (e.code === 'Space') {
+            keyboard.space = false;
+            handleBoostEnd();
+        }
     });
 }
 
@@ -48,7 +63,42 @@ function verifyGameState() {
     }
 }
 
+function handleBoostStart() {
+    // Only activate boost if not already active
+    if (!gameState.boost.active) {
+        gameState.boost.active = true;
+        gameState.boost.lastUpdateTime = Date.now();
+    }
+}
+
+function handleBoostEnd() {
+    gameState.boost.active = false;
+}
+
+function updateBoost() {
+    if (!gameState.boost.active) return;
+    
+    const now = Date.now();
+    const deltaTime = (now - gameState.boost.lastUpdateTime) / 1000; // Convert to seconds
+    gameState.boost.lastUpdateTime = now;
+    
+    // Apply mass loss to all player cells
+    gameState.playerCells.forEach(cell => {
+        // Calculate mass loss based on current score and time
+        const massLoss = cell.score * BOOST_MASS_LOSS_RATE * deltaTime;
+        
+        // Reduce score, but don't go below minimum
+        cell.score = Math.max(BOOST_MIN_SCORE, cell.score - massLoss);
+        
+        // Deactivate boost if any cell reaches minimum score
+        if (cell.score <= BOOST_MIN_SCORE) {
+            gameState.boost.active = false;
+        }
+    });
+}
+
 function gameLoop() {
+    updateBoost();
     updatePlayer();
     updateAI();
     checkCollisions();

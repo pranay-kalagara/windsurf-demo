@@ -2,7 +2,7 @@ import { gameState } from './gameState.js';
 import { getSize, calculateCenterOfMass } from './utils.js';
 import { WORLD_SIZE, COLORS, FOOD_SIZE } from './config.js';
 
-let canvas, ctx, minimapCanvas, minimapCtx, scoreElement, leaderboardContent;
+let canvas, ctx, minimapCanvas, minimapCtx, scoreElement, leaderboardContent, boostIndicator;
 
 export function initRenderer(canvasElements) {
     canvas = canvasElements.gameCanvas;
@@ -11,6 +11,7 @@ export function initRenderer(canvasElements) {
     minimapCtx = minimapCanvas.getContext('2d');
     scoreElement = canvasElements.scoreElement;
     leaderboardContent = canvasElements.leaderboardContent;
+    boostIndicator = document.getElementById('boost-indicator');
 
     // Initial canvas setup
     resizeCanvas();
@@ -107,6 +108,13 @@ export function drawGame() {
 
     // Update score display
     scoreElement.textContent = `Score: ${Math.floor(gameState.playerCells.reduce((sum, cell) => sum + cell.score, 0))}`;
+    
+    // Update boost indicator
+    if (gameState.boost.active) {
+        boostIndicator.classList.add('active');
+    } else {
+        boostIndicator.classList.remove('active');
+    }
 }
 
 export function drawMinimap() {

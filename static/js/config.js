@@ -7,6 +7,11 @@ export const FOOD_COUNT = 100;
 export const AI_COUNT = 10;
 export const COLLISION_THRESHOLD = 1.1; // 10% size difference needed for consumption
 
+// Boost mechanics
+export const BOOST_SPEED_MULTIPLIER = 2.5;  // How much faster when boosting
+export const BOOST_MASS_LOSS_RATE = 0.2;    // Mass lost per second while boosting
+export const BOOST_MIN_SCORE = 20;         // Minimum score needed to boost
+
 // Split mechanics
 export const MIN_SPLIT_SCORE = 40;  // Minimum score needed to split
 export const SPLIT_VELOCITY = 12;   // Initial velocity of split cells
