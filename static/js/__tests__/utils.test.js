@@ -79,7 +79,8 @@ describe('applyDecay', () => {
 
   test('should decay proportionally to time passed', () => {
     const entity = { score: 100 };
-    const expectedDecayFactor = Math.sqrt(entity.score) / 10;
+    // Update to use power function instead of sqrt
+    const expectedDecayFactor = Math.pow(entity.score, DECAY_SIZE_FACTOR) / 10;
     const expectedDecayAmount = DECAY_RATE * expectedDecayFactor * 1; // 1 second
     
     applyDecay(entity, 1000); // 1 second
