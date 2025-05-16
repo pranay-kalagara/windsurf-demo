@@ -33,7 +33,7 @@ function getUnusedAIName() {
     return AI_NAMES.find(name => !usedNames.has(name)) || AI_NAMES[0];
 }
 
-function updateCellMerging() {
+export function updateCellMerging() {
     const now = Date.now();
     const cellsToMerge = [];
 

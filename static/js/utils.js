@@ -1,4 +1,4 @@
-import { WORLD_SIZE } from './config.js';
+import { WORLD_SIZE, DECAY_ENABLED, DECAY_RATE, DECAY_THRESHOLD } from './config.js';
 
 export function getSize(score) {
     return Math.sqrt(score) + 20;
@@ -25,6 +25,21 @@ export function calculateCenterOfMass(cells) {
         x: cells.reduce((sum, cell) => sum + cell.x * cell.score, 0) / totalScore,
         y: cells.reduce((sum, cell) => sum + cell.y * cell.score, 0) / totalScore
     };
+}
+
+export function applyDecay(entity, deltaTime) {
+    if (!DECAY_ENABLED || entity.score <= DECAY_THRESHOLD) {
+        return entity.score;
+    }
+    
+    // Calculate decay amount based on current score and time elapsed
+    // Higher scores decay faster (proportional to sqrt of score)
+    const decayFactor = Math.sqrt(entity.score) / 10;
+    const decayAmount = DECAY_RATE * decayFactor * (deltaTime / 1000);
+    
+    // Apply decay with a minimum threshold
+    entity.score = Math.max(DECAY_THRESHOLD, entity.score - decayAmount);
+    return entity.score;
 }
 
 export function findSafeSpawnLocation(gameState, minDistance = 100) {
