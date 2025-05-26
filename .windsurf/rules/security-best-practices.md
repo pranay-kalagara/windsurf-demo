@@ -1,5 +1,6 @@
 ---
-trigger: always_on
+trigger: model_decision
+description: Review this rule whenever a substantial amount of code has been edited or created
 ---
 
 # Security Best Practices for Windsurf Demo
@@ -95,15 +96,3 @@ trigger: always_on
    - Minimize collection of user data
    - Follow data protection regulations (GDPR, CCPA, etc.)
    - Implement proper data retention policies
-
-## Compliance and Reporting
-
-1. **Security Issue Reporting**
-   - Establish a clear process for reporting security issues
-   - Implement a responsible disclosure policy
-   - Regularly review and address security concerns
-
-2. **Documentation**
-   - Document all security measures
-   - Maintain a security changelog
-   - Provide clear security guidelines for contributors
