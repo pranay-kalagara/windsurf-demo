@@ -17,3 +17,5 @@ Ensure interactions with dynamic panels (e.g., settings) are explicitly preceded
 Employ Playwright’s auto-waiting assertions (expect(locator).toHaveText(), toHaveCount(), etc.) and leverage the .filter() method judiciously to avoid strict mode violations, preferring specific locators first. Avoid adding arbitrary timeout, if a timeout is necessary it should not be longer than 3 seconds; only include explicit waits when essential to ensure visibility or loading completion.
 
 Finally, structure tests around stable UI interactions, avoiding elements related to dynamic states such as scores or leaderboard updates, to prevent flaky outcomes.
+
+Do not use --ui flag when producing tests.
