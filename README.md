@@ -82,4 +82,4 @@ Run the tests and use MCP to show browser actions.
 * In the rare instance it does something strange with windsurf browsers and your chrome profile (I cannot reproduce this), exit windsurf entirely and re-open it. 
 * Much higher chance of glitching out with Claude 3.7, use Claude 4
     * I have not tested with other models
-* **If the tool calls fail, refresh - this one happens a lot**
+* **If the tool calls for playwright fail, refresh the MCP - this one happens a lot**
