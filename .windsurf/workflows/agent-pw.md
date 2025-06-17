@@ -14,8 +14,11 @@ Before generating tests, manually explore and interact with the site using the P
 
 Ensure interactions with dynamic panels (e.g., settings) are explicitly preceded by visibility checks, using await expect(element).toBeVisible(). Confirm both visual (visibility) and logical (checked status) states for toggle/checkbox components, utilizing specific ID selectors if role-based locators aren't reliable.
 
-Employ Playwright’s auto-waiting assertions (expect(locator).toHaveText(), toHaveCount(), etc.) and leverage the .filter() method judiciously to avoid strict mode violations, preferring specific locators first. Avoid adding arbitrary timeout, if a timeout is necessary it should not be longer than 3 seconds; only include explicit waits when essential to ensure visibility or loading completion.
+Employ Playwright’s auto-waiting assertions (expect(locator).toHaveText(), toHaveCount(), etc.) and leverage the .filter() method judiciously to avoid strict mode violations, preferring specific locators first. Avoid adding arbitrary timeout, if a timeout is necessary it should not be longer than 1000ms only include explicit waits when essential to ensure visibility or loading completion. 
+
+Set a timeout limit of 5000 in the playwright.config.js.
+Set a small viewport of 800 x 600
 
 Finally, structure tests around stable UI interactions, avoiding elements related to dynamic states such as scores or leaderboard updates, to prevent flaky outcomes.
 
-Do not use --ui flag when producing tests.
+Do not use --ui flag or --headed generally when producing tests.

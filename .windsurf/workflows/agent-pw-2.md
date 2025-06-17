@@ -1,0 +1,30 @@
+---
+description: 
+---
+
+# Install playwright
+
+# npm init playwright@latest
+
+# Start my flask application app.py
+
+Configure `playwright.config.js` with a global timeout of 5000 ms, explicit `actionTimeout` 1000 ms, viewport 800 × 600
+
+Use Playwright's best practices and a hybrid locator strategy when generating tests for the site. Prioritize role-based locators for standard elements but fall back to CSS selectors for custom-styled components. Ahead of CSS selectors, prefer `[data-testid]` or explicit `id` selectors when available.
+
+Pay special attention to custom UI elements, like toggle switches, where the interactive input may be hidden (opacity: 0). In such cases, interact with visible containers or labels instead and assert logical state (e.g., `toBeChecked()`) rather than visibility of the hidden input.
+
+Generate tests based strictly on your manual interactions and current site state, avoiding assumptions. Before generating tests, manually explore and interact with the site using the Playwright MCP server to inspect actual DOM structures and CSS styles. 
+
+Only if the tests fail parse the game.html file to develop a deeper understanding of the DOM structure.
+
+Ensure interactions with dynamic panels (e.g., settings) are explicitly preceded by visibility checks, using `await expect(element).toBeVisible()`. Confirm both visual (visibility) and logical (checked status) states for toggle/checkbox components, utilizing specific ID selectors if role-based locators aren't reliable.
+
+Employ Playwright’s auto-waiting assertions (`expect(locator).toHaveText()`, `toHaveCount()`, etc.) and leverage the `.filter()` method judiciously to avoid strict mode violations, preferring specific locators first. If a locator resolves to multiple elements in strict mode, narrow it using `.filter()` or `.nth()` rather than disabling strictness. Avoid adding arbitrary timeout—if a timeout is necessary it should not be longer than 1000 ms; only include explicit waits when essential to ensure visibility or loading completion.
+
+Set a timeout limit of 5000 ms in the `playwright.config.js`.  
+
+
+Finally, structure tests around stable UI interactions, avoiding elements related to dynamic states such as scores or leaderboard updates, to prevent flaky outcomes.
+
+Do not use `--ui` flag or `--headed` generally when producing tests. 
