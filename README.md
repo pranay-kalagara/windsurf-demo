@@ -7,8 +7,9 @@ A windsurf-demo production that highlights how the Playwright MCP plugin and wor
 This repository demonstrates how to use the Playwright MCP plugin effectively, specifically tailored for showcasing the windsurf-demo.
 There are two important workflows:
 
-- agent-pw, runs the flow
-- nuke-pw, takes it down
+- pw-mcp-setup, sets up the file
+- pw-browser-tester, runs the browser tests
+- nuke-pw, takes it down from scratch, use this for errors
 
 ## Overview
 
@@ -52,7 +53,7 @@ Add the following to your Windsurf MCP config (Click Hammer Icon above cascade c
 A recommended prompt is (prompt + workflow at once):
 
   ```
-  /agent-pw
+  /pw-browser-tester
 
   Create tests for dark mode. Write four tests for dark mode:
   - Open the settings panel
