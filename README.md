@@ -26,8 +26,6 @@ Follow these steps to successfully execute and demonstrate the workflow:
 
 ### 1. Setup the Project
 
-* Optional: Run `nuke-pw` to clean up any previous Playwright MCP server instances and ensure the port is available.
-
 * Install the **Playwright MCP Plugin** directly from the official Playwright website (avoid using the plugin from Windsurf Store as it's out of date).
 
 Add the following to your Windsurf MCP config (Click Hammer Icon above cascade chat > Configure):
@@ -45,9 +43,12 @@ Add the following to your Windsurf MCP config (Click Hammer Icon above cascade c
 }
 ```
 
+* Optional: Run `nuke-pw` to clean up any previous Playwright MCP server instances and ensure the port is available.
+
+
 ### 2. Execute the Workflow - Use the prompt below
 
-* Initiates the workflow by running `agent-pw`. This automatically installs required npm packages and runs tests for this demo with best practices.
+* Initiates the workflow by running `pw-mcp-setup`. This automatically installs required npm packages and builds the playwright config to be conformant with demo best practices.
 
 * Prompt the workflow to handle the Dark Mode use case explicitly, this works and is repeatable. I would recommend experimenting with other use cases if you wish :) (If you can think of any cool semi-reliable ones let me know!) 
 
