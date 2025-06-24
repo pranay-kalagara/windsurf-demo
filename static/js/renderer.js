@@ -1,6 +1,7 @@
 import { gameState } from './gameState.js';
 import { getSize, calculateCenterOfMass } from './utils.js';
 import { WORLD_SIZE, COLORS, FOOD_SIZE } from './config.js';
+import { createTriangle } from './triangleCollision.js';
 
 let canvas, ctx, minimapCanvas, minimapCtx, scoreElement, leaderboardContent;
 
@@ -29,14 +30,30 @@ function drawCircle(x, y, value, color, isFood) {
     ctx.fill();
 }
 
-function drawCellWithName(x, y, score, color, name) {
-    const size = getSize(score);
+function drawTriangle(x, y, size, color, rotation = 0) {
+    // Create a triangle shape
+    const triangle = createTriangle(x, y, size, rotation);
     
-    // Draw cell
     ctx.beginPath();
-    ctx.arc(x, y, size, 0, Math.PI * 2);
+    ctx.moveTo(triangle.x1, triangle.y1);
+    ctx.lineTo(triangle.x2, triangle.y2);
+    ctx.lineTo(triangle.x3, triangle.y3);
+    ctx.closePath();
+    
     ctx.fillStyle = color;
     ctx.fill();
+    
+    // Add a subtle stroke for better visibility
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+}
+
+function drawCellWithName(x, y, score, color, name, rotation = 0) {
+    const size = getSize(score);
+    
+    // Draw cell as a triangle
+    drawTriangle(x, y, size, color, rotation);
 
     // Draw name
     if (size > 20) {  // Only draw name if cell is big enough
@@ -77,7 +94,7 @@ export function drawGame() {
         
         if (screenX >= -FOOD_SIZE && screenX <= canvas.width + FOOD_SIZE &&
             screenY >= -FOOD_SIZE && screenY <= canvas.height + FOOD_SIZE) {
-            drawCircle(screenX, screenY, FOOD_SIZE, food.color, true);
+            drawTriangle(screenX, screenY, FOOD_SIZE, food.color, food.rotation);
         }
     });
 
@@ -89,7 +106,7 @@ export function drawGame() {
         
         if (screenX >= -size && screenX <= canvas.width + size &&
             screenY >= -size && screenY <= canvas.height + size) {
-            drawCellWithName(screenX, screenY, ai.score, ai.color, ai.name);
+            drawCellWithName(screenX, screenY, ai.score, ai.color, ai.name, ai.rotation);
         }
     });
 
@@ -101,7 +118,7 @@ export function drawGame() {
         
         if (screenX >= -size && screenX <= canvas.width + size &&
             screenY >= -size && screenY <= canvas.height + size) {
-            drawCellWithName(screenX, screenY, cell.score, COLORS.PLAYER, gameState.playerName);
+            drawCellWithName(screenX, screenY, cell.score, COLORS.PLAYER, gameState.playerName, cell.rotation);
         }
     });
 
