@@ -50,7 +50,7 @@ This demonstrates Cascade's abilities to:
 
 2. **Demonstrate Incorporation of Human Actions**
 
-Right now, there is no decay mechanism to the score, so the big players will always stay big even if they don't move or try to continue to grow. So, let us add a decay mechanism. Start a new Cascade and just say "Hi" to start the Cascade. Now, go to `static/js/config.js` and add the following constants somewhere in the file. Click to start video:
+Right now, there is no decay mechanism to the score, so the big players will always stay big even if they don't move or try to continue to grow. So, let us add a decay mechanism. Now, go to `static/js/config.js` and add the following constants somewhere in the file. 
 
 ```js
 // Score decay mechanics
@@ -58,9 +58,7 @@ export const BASE_DECAY_RATE = 0.02;   // Base rate of score decay per second
 export const DECAY_SCALE_FACTOR = 0.2; // How much size affects decay rate
 ``` 
 
-Now, go to back to the Cascade and just type "Continue." Cascade should run somewhat like the follwing:
-
-[![Watch the video](https://img.youtube.com/vi/aHrUPrO0Pxk/maxresdefault.jpg)](https://youtu.be/aHrUPrO0Pxk)
+Now, go to back to the Cascade and just type "Continue." 
 
 This demonstrates Cascade's abilities to:
 - Reason about the actions that you are taking in the text editor and refer to them semantically.
